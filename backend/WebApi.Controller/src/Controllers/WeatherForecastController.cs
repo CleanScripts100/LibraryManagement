@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using WebApi.Business;
+using WebApi.Business.src;
 
-namespace WebApi.Controller.Controllers;
+namespace WebApi.Controller.src.Controllers;
 
 [ApiController]
 [Route("[controller]")]

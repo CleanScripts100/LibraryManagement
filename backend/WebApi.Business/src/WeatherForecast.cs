@@ -1,4 +1,4 @@
-namespace WebApi.Business;
+namespace WebApi.Business.src;
 
 public class WeatherForecast
 {
