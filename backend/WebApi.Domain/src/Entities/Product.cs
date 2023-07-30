@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace WebApi.Domain.src.Entities
 {
     public class Product
     {
         public Guid id {get; set;}
-        public string Title {get; set;}
+        public required string Title {get; set;}
         public float Price { get ;set;}
     }
 }
