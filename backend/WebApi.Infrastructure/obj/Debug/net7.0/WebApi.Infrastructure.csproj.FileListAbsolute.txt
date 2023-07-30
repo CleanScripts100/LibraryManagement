@@ -43,8 +43,16 @@
 /Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin/Debug/net7.0/Microsoft.CodeAnalysis.dll
 /Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin/Debug/net7.0/Microsoft.CodeAnalysis.CSharp.dll
 /Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin/Debug/net7.0/Microsoft.CodeAnalysis.Razor.dll
-/Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin/Debug/net7.0/Microsoft.DotNet.PlatformAbstractions.dll
 /Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin/Debug/net7.0/Microsoft.Extensions.DependencyModel.dll
 /Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin/Debug/net7.0/Newtonsoft.Json.dll
 /Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin/Debug/net7.0/Newtonsoft.Json.Bson.dll
 /Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin/Debug/net7.0/System.Security.Permissions.dll
+/Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin/Debug/net7.0/Humanizer.dll
+/Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.dll
+/Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Design.dll
+/Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Relational.dll
+/Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin/Debug/net7.0/Mono.TextTemplating.dll
+/Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin/Debug/net7.0/Npgsql.dll
+/Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin/Debug/net7.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+/Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin/Debug/net7.0/System.CodeDom.dll

@@ -1,8 +1,13 @@
+using WebApi.Infrastructure.src.Database;
+// Build
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add database into the application
+builder.Services.AddDbContext<DatabaseContext>();
 
+// Add services to the container.
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
