@@ -9,8 +9,10 @@ namespace WebApi.Business.src.Dto
         public List<string>? Images { get; set; }
         public string? Title { get; set; }
         public string? ISBN { get; set; }
-        public String? PublishedYear { get; set; }
+        public string? PublishedYear { get; set; }
         public string? Description { get; set; }
+        public int PageCount { get; set; }
+        public int InventoryCount { get; set; }
         public Genre Genre { get; set; }
     }
 }

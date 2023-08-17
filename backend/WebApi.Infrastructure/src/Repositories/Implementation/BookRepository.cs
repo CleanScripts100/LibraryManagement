@@ -16,24 +16,24 @@ namespace WebApi.Infrastructure.src.Repositories.Implementation
             _books = _dbContext.Books;
         }
 
-        public IEnumerable<Book> GetAllBooks()
+        public async Task<IEnumerable<Book>> GetAllBooks()
         {
-            return _books.ToList();
+            return await _books.ToListAsync();
         }
 
-        public Book GetBookById(Guid bookId)
+        public async Task<Book> GetBookById(Guid bookId)
         {
-            return _books.Find(bookId);
+            return await _books.FindAsync(bookId);
         }
 
-        public Book AddBook(Book book)
+        public async Task<Book> AddBook(Book book)
         {
-            _books.Add(book);
-            _dbContext.SaveChanges();
+           await _books.AddAsync(book);
+            await _dbContext.SaveChangesAsync();
             return book;
         }
 
-        public Book UpdateBook(Guid bookId, Book book)
+        public async Task<Book> UpdateBook(Guid bookId, Book book)
         {
             var updateBook = _books.Find(bookId);
             if (updateBook != null)
@@ -41,25 +41,28 @@ namespace WebApi.Infrastructure.src.Repositories.Implementation
                 updateBook.Title = book.Title ?? book.Title;
                 updateBook.Description = book.Description;
                 updateBook.InventoryCount = book.InventoryCount;
-                updateBook.Images = book.Images;                
-                Console.WriteLine("Book Updated");
-                _dbContext.SaveChanges();
+                updateBook.PageCount = book.PageCount;
+                updateBook.ISBN = book.ISBN!;
+                updateBook.PublishedYear = book.PublishedYear!;
+                updateBook.Images = book.Images!;
+                updateBook.Author = book.Author!;               
+                
+                await _dbContext.SaveChangesAsync();
                 return updateBook;
             }
-            return updateBook;
+            return updateBook!;
         }
 
-        public Book DeleteBook(Guid bookId)
+        public async Task<Book> DeleteBook(Guid bookId)
         {
             var deleteBook = _books.Find(bookId);
             if (deleteBook != null)
             {
                 _books.Remove(deleteBook);
-                _dbContext.SaveChanges();
-                Console.WriteLine("Book Deleted");
+                await _dbContext.SaveChangesAsync();
                 return deleteBook;
             }
-            return deleteBook;
+            return deleteBook!;
         }
     }
 }

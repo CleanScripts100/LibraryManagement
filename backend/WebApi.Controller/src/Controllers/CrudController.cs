@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Business.src.Abstractions;
 using WebApi.Domain.src.Shared;
@@ -22,6 +23,8 @@ namespace WebApi.Controller.src.Controllers
             return Ok(result);
         }
 
+      
+
         [HttpGet("{id:Guid}")]
         public virtual async Task<ActionResult<TReadDto>> GetOneById([FromRoute] Guid id)
         {
@@ -29,6 +32,7 @@ namespace WebApi.Controller.src.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public virtual async Task<ActionResult<TReadDto>> CreateOne([FromBody] TCreateDto dto)
         {
             var createdObject = await _baseService.CreateOne(dto);
@@ -38,16 +42,21 @@ namespace WebApi.Controller.src.Controllers
         [HttpPatch("{id:Guid}")]
         public virtual async Task<ActionResult<TReadDto>> UpdateOneById([FromRoute] Guid id, [FromBody] TUpdateDto update)
         {
-            var updatedObject = _baseService.UpdateOneById(id, update);
+            var updatedObject = await _baseService.UpdateOneById(id, update);
             return Ok(updatedObject);
         }
 
         [HttpDelete("{id:Guid}")]
-        public async Task<ActionResult<bool>> DeleteOneById([FromRoute] Guid id)
+        public virtual async Task<ActionResult<bool>> DeleteOneById([FromRoute] Guid id)
         {
             // return Ok(await _baseService.DeleteOneById(id));
             // NoContent()
-            return StatusCode(204, await _baseService.DeleteOneById(id));
+            var result = await _baseService.DeleteOneById(id);
+            if (result)
+            {
+                return NoContent();
+            }
+            return BadRequest();
         }
     }
 }

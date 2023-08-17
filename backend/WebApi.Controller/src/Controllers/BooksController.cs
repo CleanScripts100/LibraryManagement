@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Business.src.Dto;
 using WebApi.Business.src.Services.Abstractions.ServiceAbractions;
@@ -17,27 +18,30 @@ namespace WebApi.Controller.src.Controllers
         }
 
         [HttpPost]
-        public BookDto AddBook([FromBody] BookDto book)
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<BookDto>> AddBook([FromBody] BookDto book)
         {
-            return _bookService.AddBook(book);
+            return await _bookService.AddBook(book);
         }
 
         [HttpGet("{id}")]
-        public BookDto GetBookById(Guid id)
+        public async Task<ActionResult<BookDto>> GetBookById(Guid id)
         {
-            return _bookService.GetBookById(id);
+            return await _bookService.GetBookById(id);
         }
 
         [HttpPatch("{id}")]
-        public BookDto UpdateBook([FromRoute] Guid id, [FromBody] BookDto update)
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<BookDto>> UpdateBook([FromRoute] Guid id, [FromBody] Book update)
         {
-            return _bookService.UpdateBook(id, update);
+            return await  _bookService.UpdateBook(id, update);
         }
 
         [HttpDelete("{id}")]
-        public BookDto DeleteById(Guid id)
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<BookDto>> DeleteById(Guid id)
         {
-            return _bookService.DeleteBook(id);
+            return await _bookService.DeleteBook(id);
         }
     }
 }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Business.src.Abstractions;
 using WebApi.Business.src.Dto;
@@ -14,23 +15,22 @@ namespace WebApi.Controller.src.Controllers
             _userService = baseService;
         }
 
-      //  [Authorize(Roles = "Admin")]
+      /*  [Authorize(Roles = "Admin")]*/
         [HttpPost("admin")]
         public async Task<ActionResult<UserReadDto>> CreateAdmin([FromBody] UserCreateDto dto)
         {
             return CreatedAtAction(nameof(CreateAdmin), await _userService.CreateAdmin(dto));
         }
 
-      //  [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public override async Task<ActionResult<IEnumerable<UserReadDto>>> GetAll([FromQuery] QueryOptions queryOptions)
         {
             return Ok(await _userService.GetAll(queryOptions));
         }
 
-       
         // [AllowAnonymous]
         // [Authorize(Policy = "EmailWhiteList")]
-       // [Authorize(Policy = "Minimum18Years")]
+        // [Authorize(Policy = "Minimum18Years")]
         public override async Task<ActionResult<UserReadDto>> GetOneById([FromRoute] Guid id)
         {
             return Ok(await _userService.GetOneById(id));
@@ -39,11 +39,6 @@ namespace WebApi.Controller.src.Controllers
         {
             return Ok(await _userService.UpdateOneById(id, updated));
         }
-/*      public async Task<ActionResult<UserReadDto>> CreateCustomer([FromBody] UserCreateDto dto)
-        {
-            return Ok(await _userService.CreateCustomer(dto));
-        }*/
-
 
     }
 }

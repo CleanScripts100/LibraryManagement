@@ -21,7 +21,9 @@ public class UserUpdateDto
     public string? firstName { get; set; }
     public string? lastName { get; set; }
     public string? image { get; set; }
-    public Gender  Gender { get; set; }
+    public Gender Gender { get; set; }
+    [EmailAddress]
+    public string Email { get; set; } = null!;
 }
 public class UserCredentialsDto
 {

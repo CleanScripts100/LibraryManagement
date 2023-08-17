@@ -11,10 +11,3 @@ namespace WebApi.Business.src.Abstractions
         Task<TReadDto> CreateOne(TCreateDto dto);
     }
 }
-
-/* create user: names, email, password
-read 1 user: names, email, password, role
-update user profile: names, email
-update password
-read 1 product: title, price, description, images
-create product:  title, price, description, images, inventory*/
