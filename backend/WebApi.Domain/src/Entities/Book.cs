@@ -15,6 +15,5 @@ namespace WebApi.Domain.src.Entities
         public required List<string> Images { get; set; }
         public int InventoryCount { get; set; }
         public List<Review>? Reviews { get; set; }
-
     }
 }

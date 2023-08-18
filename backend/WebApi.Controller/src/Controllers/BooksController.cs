@@ -32,7 +32,7 @@ namespace WebApi.Controller.src.Controllers
 
         [HttpPatch("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<BookDto>> UpdateBook([FromRoute] Guid id, [FromBody] Book update)
+        public async Task<ActionResult<BookDto>> UpdateBook([FromRoute] Guid id, [FromBody] BookDto update)
         {
             return await  _bookService.UpdateBook(id, update);
         }
@@ -42,6 +42,26 @@ namespace WebApi.Controller.src.Controllers
         public async Task<ActionResult<BookDto>> DeleteById(Guid id)
         {
             return await _bookService.DeleteBook(id);
+        }
+
+        [HttpPost("Review")]
+        public async Task<ActionResult<Book>> AddReview(ReviewDto review)
+        {
+            
+            return await _bookService.AddReview(review);
+        }
+
+        [HttpPost("loan")]
+        
+        public async Task<ActionResult<BookDto>> LoanBook( Guid UserId, [FromBody] List<Guid> BooksId)
+        {
+            return await _bookService.LoanBook(UserId, BooksId);
+        }
+        [HttpPost("returnloan")]
+      
+        public async Task<ActionResult<BookDto>> ReturnLoanBook(Guid UserId,Guid LoanId)
+        {
+            return await _bookService.ReturnLoanedBooks(UserId, LoanId);
         }
     }
 }

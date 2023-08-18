@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Business.src.Abstractions;
 using WebApi.Domain.src.Shared;
@@ -32,7 +31,6 @@ namespace WebApi.Controller.src.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         public virtual async Task<ActionResult<TReadDto>> CreateOne([FromBody] TCreateDto dto)
         {
             var createdObject = await _baseService.CreateOne(dto);

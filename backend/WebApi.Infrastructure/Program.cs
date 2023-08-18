@@ -42,7 +42,6 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "LibraryManagement", Version = "v1" });
 
-
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
         Name = "Authorization",
@@ -88,10 +87,12 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(jwt =>
 {
-
-    string jwtConfig = builder.Configuration.GetSection("JwtConfig:JwtKey").Value!;
-    string issuer = builder.Configuration.GetSection("JwtConfig:JwtIssuer").Value!;
-    string audience = builder.Configuration.GetSection("JwtConfig:JwtAudience").Value!;
+    // string jwtConfig = builder.Configuration.GetSection("JwtConfig:JwtKey").Value!;
+    // string issuer = builder.Configuration.GetSection("JwtConfig:JwtIssuer").Value!;
+    // string audience = builder.Configuration.GetSection("JwtConfig:JwtAudience").Value!;
+    string jwtConfig = "my-secrete-key-jsdguyfsdgcjsdbchjsdb";
+    string issuer = "libraryManagement";
+    string audience = "resource";
     var key = Encoding.ASCII.GetBytes(jwtConfig);
 
     jwt.SaveToken = true;
@@ -113,11 +114,17 @@ builder.Services.AddAuthentication(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment()) // || app.Environment.IsProduction()
 {
+    // app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// app.UseCors(builder => builder
+// .AllowAnyOrigin()
+// .AllowAnyMethod()
+// .AllowAnyHeader());
 
 app.UseHttpsRedirection();
 app.UseMiddleware<ErrorHandlerMiddleware>();

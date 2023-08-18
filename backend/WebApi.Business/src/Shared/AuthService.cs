@@ -37,11 +37,12 @@ namespace WebApi.Business.src.Shared
                 new Claim(ClaimTypes.Role, user.Role.ToString()),
                 new Claim(ClaimTypes.Email, user.Email!)
             };
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("my-secrete-key-jsdguyfsdgcjsdbchjsdb jdhscjysdcsdj"));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("my-secrete-key-jsdguyfsdgcjsdbchjsdb"));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
             var securityTokenDescriptor = new SecurityTokenDescriptor
             {
-                Issuer = "librarymanagement backend",
+                Issuer = "libraryManagement",
+                Audience = "resource",
                 Expires = DateTime.Now.AddMinutes(30),
                 Subject = new ClaimsIdentity(claims),
                 SigningCredentials = signingCredentials

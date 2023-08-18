@@ -22,10 +22,10 @@ namespace WebApi.Infrastructure.src.Middleware
                 context.Response.StatusCode = 500;
                 await context.Response.WriteAsJsonAsync(e.InnerException!.Message);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 context.Response.StatusCode = 500;
-                await context.Response.WriteAsJsonAsync("Internal server error");
+                await context.Response.WriteAsJsonAsync(e.InnerException!.Message);
             }
         }
         

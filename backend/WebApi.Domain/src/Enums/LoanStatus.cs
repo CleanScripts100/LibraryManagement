@@ -3,6 +3,6 @@
     public enum LoanStatus
     {
         Returned,
-        Pending
+        Borrowed
     }
 }
