@@ -74,10 +74,22 @@ namespace WebApi.Business.src.Services.ServicesImplementations
            return _mapper.Map<BookDto>(book);
         }
 
-        public async Task<BookDto> ReturnLoanedBooks(Guid UserId, Guid LoanId)
+        public async Task<IEnumerable<Loan>> GetUserLoanedBooks(Guid UserId)
+        {
+            var loans = await _bookRepository.GetUserLoanedBooks(UserId);
+            return loans;
+        }
+
+        public async Task<bool> ReturnLoanedBooks(Guid UserId, Guid LoanId)
         {
             var book = await _bookRepository.ReturnLoanedBooks(UserId, LoanId);
-            return _mapper.Map<BookDto>(book);
+            return book;
+        }
+
+        public async Task<IEnumerable<Loan>> GetAllLoanedBooks()
+        {
+            var loans = await _bookRepository.GetAllLoanedBooks();
+            return loans;
         }
     }
 }

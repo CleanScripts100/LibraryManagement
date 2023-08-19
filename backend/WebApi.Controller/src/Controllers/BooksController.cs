@@ -52,16 +52,29 @@ namespace WebApi.Controller.src.Controllers
         }
 
         [HttpPost("loan")]
-        
         public async Task<ActionResult<BookDto>> LoanBook( Guid UserId, [FromBody] List<Guid> BooksId)
         {
             return await _bookService.LoanBook(UserId, BooksId);
         }
+
         [HttpPost("returnloan")]
-      
-        public async Task<ActionResult<BookDto>> ReturnLoanBook(Guid UserId,Guid LoanId)
+        public async Task<ActionResult<bool>> ReturnLoanBook(Guid UserId,Guid LoanId)
         {
             return await _bookService.ReturnLoanedBooks(UserId, LoanId);
+        }
+
+        [HttpGet("getallLoanedBoks")]
+        public async Task<ActionResult<IEnumerable<Loan>>> GetAllLaonedBooks()
+        {
+          var result =  await _bookService.GetAllLoanedBooks();
+            return Ok(result);
+        }
+
+        [HttpGet("getallLoanedBoksByUserId")]
+        public async Task<ActionResult<IEnumerable<Loan>>> GetUserLoanedBooks(Guid UserId)
+        {
+           var result = await _bookService.GetUserLoanedBooks(UserId);
+           return Ok(result);
         }
     }
 }

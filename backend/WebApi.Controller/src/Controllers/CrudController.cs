@@ -22,8 +22,6 @@ namespace WebApi.Controller.src.Controllers
             return Ok(result);
         }
 
-      
-
         [HttpGet("{id:Guid}")]
         public virtual async Task<ActionResult<TReadDto>> GetOneById([FromRoute] Guid id)
         {
@@ -47,8 +45,6 @@ namespace WebApi.Controller.src.Controllers
         [HttpDelete("{id:Guid}")]
         public virtual async Task<ActionResult<bool>> DeleteOneById([FromRoute] Guid id)
         {
-            // return Ok(await _baseService.DeleteOneById(id));
-            // NoContent()
             var result = await _baseService.DeleteOneById(id);
             if (result)
             {

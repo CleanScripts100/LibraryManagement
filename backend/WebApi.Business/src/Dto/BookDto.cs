@@ -13,6 +13,6 @@ namespace WebApi.Business.src.Dto
         public string? Description { get; set; }
         public int PageCount { get; set; }
         public int InventoryCount { get; set; }
-        public Genre Genre { get; set; }
+        public string? Genre { get; set; }
     }
 }

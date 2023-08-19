@@ -11,7 +11,9 @@ namespace WebApi.Business.src.Services.Abstractions.ServiceAbractions
       Task<BookDto> DeleteBook(Guid id);
       Task<IEnumerable<BookDto>> GetAllBooks();
       Task<BookDto> LoanBook(Guid UserId, List<Guid> BooksId);
-      Task<BookDto> ReturnLoanedBooks(Guid UserId, Guid LoanId);
+      Task<bool> ReturnLoanedBooks(Guid UserId, Guid LoanId);
+      Task<IEnumerable<Loan>> GetAllLoanedBooks();
+      Task<IEnumerable<Loan>> GetUserLoanedBooks(Guid UserId);
       Task<Book> AddReview(ReviewDto review);
     }
 }

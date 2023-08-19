@@ -74,6 +74,12 @@ namespace WebApi.Infrastructure.src.Repositories.Implementation
 
         public async Task<Book> AddReview(Review review)
         {
+            var user = await _dbContext.Users.FindAsync(review.UserId) ?? throw CustomException.NotFoundException("User not found");
+            var query = _reviews.Where(r => r.BookId == review.BookId && r.UserId == review.UserId);
+            if (query.Any())
+            {
+                throw new CustomException(400, "You can not review the same book twice");
+            }
             await _reviews.AddAsync(review);
             await _dbContext.SaveChangesAsync();
             var book = await _books.FindAsync(review.BookId);
@@ -114,7 +120,7 @@ namespace WebApi.Infrastructure.src.Repositories.Implementation
             throw CustomException.NotFoundException();
         }
 
-        public async Task<Book> ReturnLoanedBooks(Guid Userid, Guid LoanId)
+        public async Task<bool> ReturnLoanedBooks(Guid Userid, Guid LoanId)
         {
             var user = await _dbContext.Users.FindAsync(Userid);
             if (user == null)
@@ -131,9 +137,20 @@ namespace WebApi.Infrastructure.src.Repositories.Implementation
                 _loans.Update(loanedBook);
                 _books.Update(actualBook);
                 await _dbContext.SaveChangesAsync();
-                return actualBook;
+                return true; //Check
             }
             throw CustomException.NotFoundException("Loan Not Found");
+        }
+
+        public async Task<IEnumerable<Loan>> GetUserLoanedBooks(Guid UserId)
+        {
+            var loans = await _loans.Where(l => l.UserId == UserId).ToListAsync();
+           return loans;
+        }
+
+        public async Task<IEnumerable<Loan>> GetAllLoanedBooks()
+        {
+            return await _loans.ToListAsync();
         }
     }
 }

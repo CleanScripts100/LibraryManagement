@@ -14,12 +14,11 @@ namespace WebApi.Controller.src.Controllers
         {
             _userService = baseService;
         }
-
+        
         // [Authorize(Roles = "Admin")]
         [HttpPost("admin")]
         public async Task<ActionResult<UserReadDto>> CreateAdmin([FromBody] UserCreateDto dto)
         {
-        
             return CreatedAtAction(nameof(CreateAdmin), await _userService.CreateAdmin(dto));
         }
 
@@ -29,9 +28,6 @@ namespace WebApi.Controller.src.Controllers
             return Ok(await _userService.GetAll(queryOptions));
         }
 
-        // [AllowAnonymous]
-        // [Authorize(Policy = "EmailWhiteList")]
-        // [Authorize(Policy = "Minimum18Years")]
         public override async Task<ActionResult<UserReadDto>> GetOneById([FromRoute] Guid id)
         {
             return Ok(await _userService.GetOneById(id));
@@ -39,6 +35,12 @@ namespace WebApi.Controller.src.Controllers
         public override async Task<ActionResult<UserReadDto>> UpdateOneById(Guid id, UserUpdateDto updated)
         {
             return Ok(await _userService.UpdateOneById(id, updated));
+        }
+
+        [HttpPatch("{id}/passwordupdate")]
+        public async Task<ActionResult<UserReadDto>> UpdatePassword(Guid id, string newPassword)
+        {
+            return Ok(await _userService.UpdatePassword(id, newPassword));
         }
 
     }
