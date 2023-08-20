@@ -39,11 +39,11 @@ namespace WebApiDemo.Business.src.Implementations
         public override async Task<UserReadDto> UpdateOneById(Guid id, UserUpdateDto updated)
         {
             var foundItem = await base.GetEntityById(id) ?? throw CustomException.NotFoundException();
-            foundItem.firstName = updated.firstName!;
-            foundItem.lastName = updated.lastName!;
+            foundItem.firstName = updated.FirstName!;
+            foundItem.lastName = updated.LastName!;
             foundItem.Email = updated.Email;
-            foundItem.Gender = updated.Gender;
-            foundItem.Image = updated.image!;
+            foundItem.Gender = (WebApi.Domain.src.Enums.Gender)updated.Gender;
+            foundItem.Image = updated.Image!;
             foundItem.UpdatedAt = DateTime.UtcNow;
 
             var updatedEntity = await _userRepo.UpdateOneById(foundItem);

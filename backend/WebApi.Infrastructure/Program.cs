@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using WebApi.Business.src.Abstractions;
-using WebApi.Business.src.Services.Abstractions.RepoAbstractions;
 using WebApi.Business.src.Services.Abstractions.ServiceAbractions;
 using WebApi.Business.src.Services.ServicesImplementations;
 using WebApi.Business.src.Shared;

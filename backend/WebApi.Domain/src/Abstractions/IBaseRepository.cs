@@ -2,9 +2,9 @@ using WebApi.Domain.src.Shared;
 
 namespace WebApi.Domain.src.Abstractions
 {
-    public interface IBaseRepository<T> // repo should not work with Dto, but original entities
+    public interface IBaseRepository<T> 
     {
-        Task<IEnumerable<T>> GetAll(QueryOptions queryOptions); //should consider the sorting, searching, pagination
+        Task<IEnumerable<T>> GetAll(QueryOptions queryOptions); 
         Task<T?> GetOneById(Guid id);
         Task<T> UpdateOneById(T updatedEntity);
         Task<bool> DeleteOneById(T entity);

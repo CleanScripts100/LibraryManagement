@@ -1,8 +1,7 @@
 using AutoMapper;
 using WebApi.Business.src.Dto;
-using WebApi.Business.src.Services.Abstractions.RepoAbstractions;
 using WebApi.Business.src.Services.Abstractions.ServiceAbractions;
-using WebApi.Business.src.Shared;
+using WebApi.Domain.src.Abstractions;
 using WebApi.Domain.src.Entities;
 
 namespace WebApi.Business.src.Services.ServicesImplementations
@@ -55,41 +54,6 @@ namespace WebApi.Business.src.Services.ServicesImplementations
         {
             var foundBook = await  _bookRepository.GetBookById(id);
             return _mapper.Map<BookDto>(foundBook);        
-        }
-
-        public async Task<Book> AddReview(ReviewDto dto)
-        {
-            var review = _mapper.Map<Review>(dto);
-            if (review == null)
-            {
-                throw CustomException.NotFoundException();
-            }
-            var book = await _bookRepository.AddReview(review);
-            return book;
-        }
-
-        public async Task<BookDto> LoanBook(Guid UserId, List<Guid> BooksId)
-        {
-            var book = await _bookRepository.LoanBook(UserId, BooksId);
-           return _mapper.Map<BookDto>(book);
-        }
-
-        public async Task<IEnumerable<Loan>> GetUserLoanedBooks(Guid UserId)
-        {
-            var loans = await _bookRepository.GetUserLoanedBooks(UserId);
-            return loans;
-        }
-
-        public async Task<bool> ReturnLoanedBooks(Guid UserId, Guid LoanId)
-        {
-            var book = await _bookRepository.ReturnLoanedBooks(UserId, LoanId);
-            return book;
-        }
-
-        public async Task<IEnumerable<Loan>> GetAllLoanedBooks()
-        {
-            var loans = await _bookRepository.GetAllLoanedBooks();
-            return loans;
         }
     }
 }
