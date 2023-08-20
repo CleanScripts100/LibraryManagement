@@ -29,7 +29,7 @@ namespace WebApi.Business.src.Shared
             return GenerateToken(foundUserByEmail);
         }
 
-        private string GenerateToken(User user)
+        private static string GenerateToken(User user)
         {
             /* should find a way to move the logic to webapi layer */
             var claims = new List<Claim>{

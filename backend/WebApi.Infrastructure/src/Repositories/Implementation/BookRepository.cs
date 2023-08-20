@@ -68,7 +68,7 @@ namespace WebApi.Infrastructure.src.Repositories.Implementation
             return deleteBook!;
         }
 
-        public async Task<IEnumerable<Book>> GetAllBooks(QueryOptions queryOptions)
+        public Task<IEnumerable<Book>> GetAllBooks(QueryOptions queryOptions)
         {
             throw new NotImplementedException();
         }

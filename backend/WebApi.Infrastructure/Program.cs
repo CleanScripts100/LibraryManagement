@@ -11,6 +11,7 @@ using WebApi.Domain.src.Abstractions;
 using WebApi.Infrastructure.src.Middleware;
 using WebApi.Infrastructure.src.Repositories.Implementation;
 using WebApiDemo.Business.src.Implementations;
+using WebApi.Infrastructure.src.Repositories;
 // Build
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +30,10 @@ builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IBookRepository, BookRepository>()
 .AddScoped<IUserRepo, UserRepo>()
 .AddScoped<IUserService, UserService>()
-.AddScoped<IAuthService, AuthService>();
+.AddScoped<IAuthService, AuthService>()
+.AddScoped<IReviewService,ReviewService>()
+.AddScoped<IReviewRepository,ReviewRepository>();
+
 
 // Add Automapper DI
 builder.Services.AddAutoMapper(typeof(Program).Assembly);

@@ -1,12 +1,13 @@
-
 using Microsoft.EntityFrameworkCore;
+using WebApi.Business.src.Abstractions;
 using WebApi.Business.src.Shared;
+using WebApi.Domain.src.Abstractions;
 using WebApi.Domain.src.Entities;
 using WebApi.Infrastructure.src.Database;
 
 namespace WebApi.Infrastructure.src.Repositories
 {
-    public class ReviewRepository
+    public class ReviewRepository : IReviewRepository
     {
         private readonly DatabaseContext _dbContext;
         private readonly DbSet<Book> _books;

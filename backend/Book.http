@@ -1,0 +1,19 @@
+### Post Book
+POST http://localhost:5292/api/v1/Books
+Content-Type: application/json
+
+{
+  "author": [
+    "Test"
+  ],
+  "images": [
+    "test.jpg"
+  ],
+  "title": "test",
+  "isbn": "23333",
+  "publishedYear": "2012",
+  "description": "sefffdsdf",
+  "pageCount": 10,
+  "inventoryCount": 4,
+  "genre": "Novel"
+}

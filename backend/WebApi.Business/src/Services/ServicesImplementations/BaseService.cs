@@ -27,10 +27,15 @@ namespace WebApi.Business.src.Implementations
             return false;
         }
 
+        public async Task<IEnumerable<TReadDto>> GetAll()
+        {
+            var result = await _baseRepo.GetAll();
+            return _mapper.Map<IEnumerable<TReadDto>>(result);
+        }
+
         public async Task<IEnumerable<TReadDto>> GetAll(QueryOptions queryOptions)
         {
             var result = await _baseRepo.GetAll(queryOptions);
-            Console.WriteLine(result.Count());
             return _mapper.Map<IEnumerable<TReadDto>>(result);
         }
       

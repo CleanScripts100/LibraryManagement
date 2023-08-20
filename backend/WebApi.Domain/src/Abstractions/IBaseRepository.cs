@@ -9,5 +9,6 @@ namespace WebApi.Domain.src.Abstractions
         Task<T> UpdateOneById(T updatedEntity);
         Task<bool> DeleteOneById(T entity);
         Task<T> CreateOne(T entity);
+        Task<IEnumerable<T>> GetAll(); 
     }
 }

@@ -31,6 +31,11 @@ namespace WebApi.Infrastructure.src.Repositories.Implementation
             return true;
         }
 
+        public async Task<IEnumerable<T>> GetAll()
+        {
+            return await _dbSet.ToArrayAsync();
+        }
+
         public async Task<IEnumerable<T>> GetAll(QueryOptions queryOptions)
         {
             return await _dbSet.ToArrayAsync();
