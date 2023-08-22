@@ -31,6 +31,8 @@ builder.Services.AddScoped<IBookRepository, BookRepository>()
 .AddScoped<IUserRepo, UserRepo>()
 .AddScoped<IUserService, UserService>()
 .AddScoped<IAuthService, AuthService>()
+.AddScoped<ILoanService,LoanService>()
+.AddScoped<ILoanRepository,LoanRepository>()
 .AddScoped<IReviewService,ReviewService>()
 .AddScoped<IReviewRepository,ReviewRepository>();
 
