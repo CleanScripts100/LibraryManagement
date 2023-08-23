@@ -1,4 +1,3 @@
-
 using Microsoft.EntityFrameworkCore;
 using WebApi.Business.src.Shared;
 using WebApi.Domain.src.Abstractions;
@@ -47,7 +46,7 @@ namespace WebApi.Infrastructure.src.Repositories
                     BookId = BooksId,
                     UserId = UserId,
                     ReturnDate = DateTime.UtcNow.AddDays(7),
-                     Books = books,
+                    Books = books,
                     Status = Domain.src.Enums.LoanStatus.Borrowed
                 };
 
@@ -95,6 +94,12 @@ namespace WebApi.Infrastructure.src.Repositories
             {
                 throw CustomException.NotFoundException("No Loans Yet");
             }
+
+            foreach (var loan in loans)
+            {
+                loan.Books = await _books.Where(b => loan.BookId.Contains(b.Id)).ToListAsync();
+            }
+            
             return loans;
         }
 
@@ -105,6 +110,12 @@ namespace WebApi.Infrastructure.src.Repositories
             {
                 throw CustomException.NotFoundException("You have No Loans Yet");
             }
+
+            foreach (var loan in loans)
+            {
+                loan.Books = await _books.Where(b => loan.BookId.Contains(b.Id)).ToListAsync();
+            }
+
             return loans;
         }
     }

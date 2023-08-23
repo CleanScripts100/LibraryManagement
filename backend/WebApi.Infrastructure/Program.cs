@@ -119,18 +119,16 @@ builder.Services.AddAuthentication(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment()) // || app.Environment.IsProduction()
+if (app.Environment.IsDevelopment()) 
 {
-    // app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// app.UseCors(builder => builder
-// .AllowAnyOrigin()
-// .AllowAnyMethod()
-// .AllowAnyHeader());
+// app.UseSwagger();
+// app.UseSwaggerUI();
 
+app.UseCors();
 app.UseHttpsRedirection();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 
