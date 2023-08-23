@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Business.src.Abstractions;
 using WebApi.Business.src.Dto;
@@ -14,7 +15,6 @@ namespace WebApi.Controller.src.Controllers
             _loanService = loanService;
         }
 
-
         [HttpPost]
         public async Task<ActionResult<LoanViewDto>> LoanBook(Guid UserId, [FromBody] List<Guid> BooksId)
         {
@@ -22,13 +22,13 @@ namespace WebApi.Controller.src.Controllers
         }
 
         [HttpPost("returnloan")]
-
         public async Task<ActionResult<bool>> ReturnLoanBook(Guid UserId, Guid LoanId)
         {
             return await _loanService.ReturnLoanedBooks(UserId, LoanId);
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<LoanViewDto>>> GetAllLoanedBooks()
         {
             var result = await _loanService.GetAllLoanedBooks();
