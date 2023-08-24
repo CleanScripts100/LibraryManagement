@@ -50,11 +50,7 @@ namespace WebApi.Business.src.Implementations
         }
         public virtual async Task<TReadDto> UpdateOneById(Guid id, TUpdateDto updated)
         {
-            var foundItem = _mapper.Map<T>(await _baseRepo.GetOneById(id));
-            if (foundItem is null)
-            {
-                throw CustomException.NotFoundException(); // not a good way, should throw generic error
-            }
+            var foundItem = _mapper.Map<T>(await _baseRepo.GetOneById(id)) ?? throw CustomException.NotFoundException();
             var baseEntity = _mapper.Map<T>(updated);
             var updatedEntity = await _baseRepo.UpdateOneById(baseEntity);
             return _mapper.Map<TReadDto>(updatedEntity);

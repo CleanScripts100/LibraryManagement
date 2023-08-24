@@ -12,7 +12,7 @@ namespace WebApi.Domain.src.Entities
         public Role Role { get; set; }
         public string? Image { get; set; }
         public byte[]? Salt { get; set; }
-
+        public List<Loan>? Loans { get; set; }
     }
 
 }

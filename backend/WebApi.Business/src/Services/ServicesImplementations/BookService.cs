@@ -22,8 +22,7 @@ namespace WebApi.Business.src.Services.ServicesImplementations
             var book = _mapper.Map<Book>(bookdto);
             if (findBook != null)
             {
-                
-                var updateBook = await  _bookRepository.UpdateBook(id, book);
+                _ = await _bookRepository.UpdateBook(id, book);
                 return _mapper.Map<BookDto>(findBook);
             } else
             {
@@ -44,10 +43,10 @@ namespace WebApi.Business.src.Services.ServicesImplementations
             return _mapper.Map<BookDto>(deleteBook);        
         }
 
-       async Task<IEnumerable<BookDto>> IBookService.GetAllBooks()
+       async Task<IEnumerable<BookReadDto>> IBookService.GetAllBooks()
         {
             var books = await _bookRepository.GetAllBooks();
-            return books.Select(books => _mapper.Map<BookDto>(books));        
+            return books.Select(books => _mapper.Map<BookReadDto>(books));        
         }
 
        async Task<BookDto> IBookService.GetBookById(Guid id)

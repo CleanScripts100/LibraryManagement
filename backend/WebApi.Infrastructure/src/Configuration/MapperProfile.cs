@@ -9,8 +9,9 @@ namespace WebApi.Infrastructure.src.Configuration
       public MapperProfile()
       {
         CreateMap<Book, BookDto>()
-          .ForMember(destinationMember: dest => dest.Genre, memberOptions: opt => opt.MapFrom(src => $"{src.Genre}"));
-        CreateMap<Book, BookDto>().ReverseMap();
+          .ForMember(destinationMember: dest => dest.Genre, memberOptions: opt => opt.MapFrom(src => $"{src.Genre}")).ReverseMap();
+        CreateMap<Book, BookReadDto>()
+          .ForMember(destinationMember: dest => dest.Genre, memberOptions: opt => opt.MapFrom(src => $"{src.Genre}")).ReverseMap();
         CreateMap<User, UserReadDto>()
           .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => $"{src.FirstName}"))
           .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => $"{src.FirstName}"))

@@ -25,7 +25,7 @@ namespace WebApi.Business.src.Services.ServicesImplementations
                     ReturnDate = loan.ReturnDate,
                     Status = loan.Status.ToString(),
                     UserId = loan.UserId,
-                    books = await BookIdListToBooDtoList(loan.Books)
+                    books = BookIdListToBooDtoList(loan.Books)
                 };
                 LoanViewDto.Add(dd);
             }
@@ -44,7 +44,7 @@ namespace WebApi.Business.src.Services.ServicesImplementations
                     ReturnDate = loan.ReturnDate,
                     Status = loan.Status.ToString(),
                     UserId = loan.UserId,
-                    books = await BookIdListToBooDtoList(loan.Books)
+                    books = BookIdListToBooDtoList(loan.Books)
                 };
                 LoanViewDto.Add(dto);
             }
@@ -59,30 +59,29 @@ namespace WebApi.Business.src.Services.ServicesImplementations
                 UserId = loan.UserId,
                 ReturnDate = loan.ReturnDate,
                 Status = loan.Status.ToString(),
-                books = await BookIdListToBooDtoList(loan.Books)
+                books = BookIdListToBooDtoList(loan.Books)
             };
             return output;
         }
 
-        private async Task<List<BookDto>> BookIdListToBooDtoList(List<Book> Books)
+        private static List<BookDto> BookIdListToBooDtoList(List<Book> Books)
+        {
+            //convert the book to bookdto
+            List<BookDto> bookDTOList = Books.Select(book => new BookDto
             {
-                //convert the book to bookdto
-                List<BookDto> bookDTOList = Books.Select(book =>
-                new BookDto
-                {
-                    Title = book.Title,
-                    Author = book.Author,
-                    Description = book.Description,
-                    Genre = book.Genre.ToString(),
-                    Images = book.Images,
-                    ISBN = book.ISBN,
-                    PageCount = book.PageCount,
-                    PublishedYear = book.PublishedYear
-                }
-                  ).ToList();
-                //  return Bookdto
-                return bookDTOList;
+                Title = book.Title,
+                Author = book.Author,
+                Description = book.Description,
+                Genre = book.Genre.ToString(),
+                Images = book.Images,
+                ISBN = book.ISBN,
+                PageCount = book.PageCount,
+                PublishedYear = book.PublishedYear
             }
+              ).ToList();
+            //  return Bookdto
+            return bookDTOList;
+        }
 
         public async Task<bool> ReturnLoanedBooks(Guid UserId, Guid LoanId)
         {

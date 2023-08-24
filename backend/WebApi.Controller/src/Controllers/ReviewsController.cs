@@ -24,9 +24,9 @@ namespace WebApi.Controller.src.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReviewDto>>> BookReviews(Guid BookId)
+        public async Task<ActionResult<IEnumerable<ReviewDto>>> BookReviews(Guid bookId)
         {
-            var result = await _reviewService.BookReviews(BookId);
+            var result = await _reviewService.BookReviews(bookId);
             return result;
 
         }

@@ -1,5 +1,4 @@
 using WebApi.Business.src.Dto;
-using WebApi.Domain.src.Entities;
 
 namespace WebApi.Business.src.Services.Abstractions.ServiceAbractions
 {
@@ -9,6 +8,6 @@ namespace WebApi.Business.src.Services.Abstractions.ServiceAbractions
       Task<BookDto> GetBookById(Guid id);
       Task<BookDto> UpdateBook(Guid id, BookDto book);
       Task<BookDto> DeleteBook(Guid id);
-      Task<IEnumerable<BookDto>> GetAllBooks();
+      Task<IEnumerable<BookReadDto>> GetAllBooks();
     }
 }
