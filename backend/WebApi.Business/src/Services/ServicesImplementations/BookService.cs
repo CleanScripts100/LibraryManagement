@@ -3,6 +3,7 @@ using WebApi.Business.src.Dto;
 using WebApi.Business.src.Services.Abstractions.ServiceAbractions;
 using WebApi.Domain.src.Abstractions;
 using WebApi.Domain.src.Entities;
+using WebApi.Domain.src.Shared;
 
 namespace WebApi.Business.src.Services.ServicesImplementations
 {
@@ -47,6 +48,12 @@ namespace WebApi.Business.src.Services.ServicesImplementations
         {
             var books = await _bookRepository.GetAllBooks();
             return books.Select(books => _mapper.Map<BookReadDto>(books));        
+        }
+
+        public async Task<IEnumerable<BookReadDto>> GetAllBooks(QueryOptions queryOptions)
+        {
+            var result = await _bookRepository.GetAllBooks(queryOptions);
+            return _mapper.Map<IEnumerable<BookReadDto>>(result);
         }
 
        async Task<BookDto> IBookService.GetBookById(Guid id)

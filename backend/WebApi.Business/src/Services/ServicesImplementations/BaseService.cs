@@ -27,12 +27,6 @@ namespace WebApi.Business.src.Implementations
             return false;
         }
 
-        public async Task<IEnumerable<TReadDto>> GetAll()
-        {
-            var result = await _baseRepo.GetAll();
-            return _mapper.Map<IEnumerable<TReadDto>>(result);
-        }
-
         public async Task<IEnumerable<TReadDto>> GetAll(QueryOptions queryOptions)
         {
             var result = await _baseRepo.GetAll(queryOptions);
@@ -50,7 +44,7 @@ namespace WebApi.Business.src.Implementations
         }
         public virtual async Task<TReadDto> UpdateOneById(Guid id, TUpdateDto updated)
         {
-            var foundItem = _mapper.Map<T>(await _baseRepo.GetOneById(id)) ?? throw CustomException.NotFoundException();
+            _ = _mapper.Map<T>(await _baseRepo.GetOneById(id)) ?? throw CustomException.NotFoundException();
             var baseEntity = _mapper.Map<T>(updated);
             var updatedEntity = await _baseRepo.UpdateOneById(baseEntity);
             return _mapper.Map<TReadDto>(updatedEntity);

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Business.src.Dto;
 using WebApi.Business.src.Services.Abstractions.ServiceAbractions;
+using WebApi.Domain.src.Shared;
 
 namespace WebApi.Controller.src.Controllers
 {
@@ -32,7 +33,8 @@ namespace WebApi.Controller.src.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookDto>>> GetAllBooks()
         {
-            return Ok(await _bookService.GetAllBooks());
+            var result = await _bookService.GetAllBooks();
+            return Ok(result);
         }
 
         [HttpPatch("{id}")]
@@ -47,6 +49,14 @@ namespace WebApi.Controller.src.Controllers
         public async Task<ActionResult<BookDto>> DeleteById(Guid id)
         {
             return await _bookService.DeleteBook(id);
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<BookReadDto>>> GetAllBooks([FromQuery] QueryOptions queryOptions)
+        {
+            _ = new List<BookReadDto>();
+            IEnumerable<BookReadDto> result = await _bookService.GetAllBooks(queryOptions);
+            return Ok(result);
         }
     }
 }

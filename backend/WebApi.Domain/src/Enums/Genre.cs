@@ -4,6 +4,7 @@
     {
         Novel,
         ResearchPaper,
+        Fiction,
         TextBook,
         Other
     }

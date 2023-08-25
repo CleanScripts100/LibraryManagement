@@ -3,6 +3,7 @@ using WebApi.Domain.src.Abstractions;
 using WebApi.Domain.src.Entities;
 using WebApi.Domain.src.Shared;
 using WebApi.Infrastructure.src.Database;
+using static WebApi.Domain.src.Shared.QueryOptions;
 
 namespace WebApi.Infrastructure.src.Repositories.Implementation
 {
@@ -68,9 +69,40 @@ namespace WebApi.Infrastructure.src.Repositories.Implementation
             return deleteBook!;
         }
 
-        public Task<IEnumerable<Book>> GetAllBooks(QueryOptions queryOptions)
+        public async Task<IEnumerable<Book>> GetAllBooks(QueryOptions queryOptions)
         {
-            throw new NotImplementedException();
+
+            IQueryable<Book> query = _books;
+            List<Book> books = new();
+            if (queryOptions.Search != null)
+            {
+
+                query = queryOptions.Search.SearchKey switch
+                {
+                    SearchKey.Author => _books.Where(b => b.Author.Contains(queryOptions.Search.SearchKeyValue.ToLower())),
+                    SearchKey.Title => _books.Where(b => b.Title == queryOptions.Search.SearchKeyValue.ToLower()),
+                    SearchKey.Genre => _books.Where(b => b.Genre.ToString() == queryOptions.Search.SearchKeyValue.ToLower()),
+                    _ => _books.Where(b => b.Title == queryOptions.Search.SearchKeyValue.ToLower()),
+                };
+            }
+
+            if (queryOptions.PageNumber != null)
+            {
+                query = query.Skip(queryOptions.PageNumber.Value);
+            }
+
+            if (queryOptions.PerPage != null)
+            {
+                query = query.Take(queryOptions.PerPage.Value);
+            }
+
+            if (queryOptions.OrderByDesc)
+            {
+                query = query.OrderByDescending(b => b.Id);
+            }
+
+            books = await query.ToListAsync();
+            return books;
         }
 
     }
