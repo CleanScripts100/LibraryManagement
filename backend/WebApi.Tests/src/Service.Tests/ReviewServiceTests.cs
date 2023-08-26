@@ -1,71 +1,102 @@
+using AutoMapper;
+using Moq;
+using WebApi.Business.src.Dto;
+using WebApi.Business.src.Services.ServicesImplementations;
+using WebApi.Domain.src.Abstractions;
+using WebApi.Domain.src.Entities;
+using WebApi.Infrastructure.src.Configuration;
 
-// using AutoMapper;
-// using Moq;
-// using WebApi.Business.src.Dto;
-// using WebApi.Business.src.Services.ServicesImplementations;
-// using WebApi.Domain.src.Abstractions;
-// using WebApi.Domain.src.Entities;
-// using WebApi.Infrastructure.src.Configuration;
+namespace WebApi.Tests
+{
+    public class ReviewServiceTests
+    {
+        private readonly IMapper _mapper;
+        private readonly Mock<IReviewRepository> _reviewRepositoryMock;
 
-// namespace WebApi.Tests.src.Service.Tests
-// {
-//     public class ReviewServiceTests
-//     {
-//         [Fact]
-//         public async Task AddReview_ValidInput_ReturnsBook()
-//         {
-//             // Arrange
-//             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile<MapperProfile>());
-//             IMapper mapper = mapperConfig.CreateMapper();
+        public ReviewServiceTests()
+        {
+            var mapperConfig = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<MapperProfile>();
+            });
+            _mapper = mapperConfig.CreateMapper();
 
-//             var mockRepository = new Mock<IReviewRepository>();
-//             var reviewService = new ReviewService(mapper, mockRepository.Object);
+            _reviewRepositoryMock = new Mock<IReviewRepository>();
+        }
 
-//             var reviewDto = new ReviewDto { Rating = 5, Comment = "Great book" };
-//             var reviewEntity = new Review { Rating = reviewDto.Rating, Comment = reviewDto.Comment };
-//             mockRepository.Setup(repo => repo.AddReview(It.IsAny<Review>()))
-//                 .ReturnsAsync(new Book
-//                 {
-//                     Id = Guid.NewGuid(),
-//                     Title = "Sample Title",
-//                     Author = {"Sample Author"}, // Set required Author property
-//                     Images = new List<string> {"sample.jpg"}     // Set required Images property
-//                     // Set other properties as needed
-//                 });
+        [Fact]
+        public async Task AddReview_ValidDto_ReturnsBook()
+        {
+            // Arrange
+            var dto = new ReviewDto
+            {
+                BookId = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
+                Rating = 5,
+                Comment = "Great book!"
+            };
+            var review = _mapper.Map<Review>(dto);
+            var book = new Book
+            {
+                Author = new List<string> { "Adam James" },
+                Images = new List<string> { "1.jpg" },
+            };
 
-//             // Act
-//             var result = await reviewService.AddReview(reviewDto);
+            _reviewRepositoryMock.Setup(repo => repo.AddReview(It.IsAny<Review>())).ReturnsAsync(book);
 
-//             // Assert
-//             Assert.NotNull(result);
-//             Assert.IsType<Book>(result);
-//         }
+            var reviewService = new ReviewService(_mapper, _reviewRepositoryMock.Object);
 
-//         [Fact]
-//         public async Task BookReviews_ValidBookId_ReturnsListOfReviewDto()
-//         {
-//             // Arrange
-//             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile<MapperProfile>());
-//             IMapper mapper = mapperConfig.CreateMapper();
+            // Act
+            var result = await reviewService.AddReview(dto);
 
-//             var mockRepository = new Mock<IReviewRepository>();
-//             var bookId = Guid.NewGuid();
-//             var reviews = new List<Review>
-//             {
-//                 new Review { Rating = 5, Comment = "Excellent" },
-//                 new Review { Rating = 4, Comment = "Good" },
-//             };
-//             mockRepository.Setup(repo => repo.BookReviews(bookId))
-//                 .ReturnsAsync(reviews);
+            // Debugging: Print the result and dto to the console
+            Console.WriteLine("Result: " + result); // Check if result is null
+            Console.WriteLine("Dto: " + dto); // Check if dto is correctly initialized
 
-//             var reviewService = new ReviewService(mapper, mockRepository.Object);
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<Book>(result);
 
-//             // Act
-//             var result = await reviewService.BookReviews(bookId);
+        }
 
-//             // Assert
-//             Assert.NotNull(result);
-//             Assert.Equal(reviews.Count, result.Count);
-//         }
-//     }
-// }
+        [Fact]
+        public async Task BookReviews_ValidId_ReturnsListOfReviewDtos()
+        {
+            // Arrange
+            var bookId = Guid.NewGuid();
+            var review1 = new Review
+            {
+                BookId = bookId,
+                UserId = Guid.NewGuid(),
+                Rating = 4,
+                Comment = "Great book!"
+            };
+    
+            var review2 = new Review
+            {
+                BookId = bookId,
+                UserId = Guid.NewGuid(),
+                Rating = 5,
+                Comment = "Amazing read!"
+            };
+
+            var reviews = new List<Review> 
+            {
+                review1,
+                review2
+            };
+            
+            _reviewRepositoryMock.Setup(repo => repo.BookReviews(bookId)).ReturnsAsync(reviews);
+
+            var reviewService = new ReviewService(_mapper, _reviewRepositoryMock.Object);
+
+            // Act
+            var result = await reviewService.BookReviews(bookId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<List<ReviewDto>>(result);
+            Assert.Equal(reviews.Count, result.Count);
+        }
+    }
+}
