@@ -31,20 +31,20 @@ namespace WebApi.Business.src.Services.ServicesImplementations
             }
         }
 
-        async Task<BookDto> IBookService.AddBook(BookDto bookDto)
+        public async Task<BookDto> AddBook(BookDto bookDto)
         {
             var bookAdd = _mapper.Map<Book>(bookDto);
             var addedbook = await _bookRepository.AddBook(bookAdd);
             return _mapper.Map<BookDto>(addedbook);        
         }
 
-       async Task<BookDto> IBookService.DeleteBook(Guid bookId)
+        public async Task<BookDto> DeleteBook(Guid bookId)
         {
             var deleteBook = await _bookRepository.DeleteBook(bookId);
             return _mapper.Map<BookDto>(deleteBook);        
         }
 
-       async Task<IEnumerable<BookReadDto>> IBookService.GetAllBooks()
+        public async Task<IEnumerable<BookReadDto>> GetAllBooks()
         {
             var books = await _bookRepository.GetAllBooks();
             return books.Select(books => _mapper.Map<BookReadDto>(books));        
@@ -56,7 +56,7 @@ namespace WebApi.Business.src.Services.ServicesImplementations
             return _mapper.Map<IEnumerable<BookReadDto>>(result);
         }
 
-       async Task<BookDto> IBookService.GetBookById(Guid id)
+        public async Task<BookDto> GetBookById(Guid id)
         {
             var foundBook = await  _bookRepository.GetBookById(id);
             return _mapper.Map<BookDto>(foundBook);        

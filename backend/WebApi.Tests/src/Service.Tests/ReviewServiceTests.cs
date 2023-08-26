@@ -6,7 +6,7 @@ using WebApi.Domain.src.Abstractions;
 using WebApi.Domain.src.Entities;
 using WebApi.Infrastructure.src.Configuration;
 
-namespace WebApi.Tests
+namespace WebApi.Tests.src.Service.Tests
 {
     public class ReviewServiceTests
     {

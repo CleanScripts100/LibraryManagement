@@ -1,6 +1,4 @@
 
-using System.Security.Cryptography.X509Certificates;
-
 namespace WebApi.Business.src.Dto
 {
     public class BookDto

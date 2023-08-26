@@ -14,7 +14,7 @@ namespace WebApi.Infrastructure.src.Configuration
           .ForMember(destinationMember: dest => dest.Genre, memberOptions: opt => opt.MapFrom(src => $"{src.Genre}")).ReverseMap();
         CreateMap<User, UserReadDto>()
           .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => $"{src.FirstName}"))
-          .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => $"{src.FirstName}"))
+          .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => $"{src.LastName}"))
           .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => $"{src.Image}"))
           .ForMember(dest => dest.Role, opt => opt.MapFrom(src => $"{src.Role}"))
           .ReverseMap();

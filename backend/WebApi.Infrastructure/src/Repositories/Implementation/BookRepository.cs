@@ -79,10 +79,10 @@ namespace WebApi.Infrastructure.src.Repositories.Implementation
 
                 query = queryOptions.Search.SearchKey switch
                 {
-                    SearchKey.Author => _books.Where(b => b.Author.Contains(queryOptions.Search.SearchKeyValue.ToLower())),
-                    SearchKey.Title => _books.Where(b => b.Title == queryOptions.Search.SearchKeyValue.ToLower()),
-                    SearchKey.Genre => _books.Where(b => b.Genre.ToString() == queryOptions.Search.SearchKeyValue.ToLower()),
-                    _ => _books.Where(b => b.Title == queryOptions.Search.SearchKeyValue.ToLower()),
+                    SearchKey.Author => _books.Where(b => b.Author.Contains(queryOptions.Search.SearchKeyValue)),
+                    SearchKey.Title => _books.Where(b => b.Title!.ToLower() == queryOptions.Search.SearchKeyValue.ToLower()),
+                    SearchKey.Genre => _books.Where(b => b.Genre.ToString().ToLower() == queryOptions.Search.SearchKeyValue.ToLower()),
+                    _ => _books.Where(b => b.Title!.ToLower() == queryOptions.Search.SearchKeyValue.ToLower()),
                 };
             }
 
