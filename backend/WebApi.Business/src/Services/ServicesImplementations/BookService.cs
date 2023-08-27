@@ -27,7 +27,7 @@ namespace WebApi.Business.src.Services.ServicesImplementations
                 return _mapper.Map<BookDto>(findBook);
             } else
             {
-                return null;
+                return null!;
             }
         }
 
