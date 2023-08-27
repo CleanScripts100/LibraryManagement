@@ -1,6 +1,5 @@
 name: Deploy backend
 on: [push]
-
 jobs:
   Deploy-backend:
     runs-on: ubuntu-latest
@@ -19,15 +18,40 @@ jobs:
         run: dotnet build --no-restore
       - name: Test
         run: dotnet test --no-build --verbosity normal
-      # - name: Building web app
-      #   uses: azure/appservice-build@v3
-      #   with:
-      #     platform: <PLATFORM_NAME>
-      #     platform-version: <PLATFORM_VERSION>
-      #     source-directory: <SOURCE_DIR>
-      #     output-directory: <OUTPUT_DIR>
-      # - name: Deploying web app to Azure
-      #   uses: azure/webapps-deploy@v1
-      #   with:
-      #     app-name: <WEB_APP_NAME>
-      #     publish-profile: ${{ secrets.AZURE_WEB_APP_PUBLISH_PROFILE }}
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "7.x"
+          include-prerelease: true
+      - name: Build with dotnet
+        run: dotnet build --configuration Release
+      - name: dotnet publish
+        run: dotnet publish -c Release -o /Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: .net-app
+          path: /Users/ebizimoh/Documents/Integrify_Files/fs15_Fullstack/backend/WebApi.Infrastructure/bin
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: "production"
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: .net-app
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: "LibMgtSyst"
+          slot-name: "production"
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_d2b9e8deb42f434aacee887b01d1edaf }}
+          package: .
