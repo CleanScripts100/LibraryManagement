@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Business.src.Abstractions;
 using WebApi.Domain.src.Shared;
@@ -13,6 +15,13 @@ namespace WebApi.Controller.src.Controllers
         public CrudController(IBaseService<T, TReadDto, TCreateDto, TUpdateDto> baseService)
         {
             _baseService = baseService;
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public Guid GetUserId () 
+        {
+            var claim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            return new Guid (claim!.Value);
         }
 
         [HttpGet]

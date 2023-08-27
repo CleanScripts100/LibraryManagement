@@ -173,49 +173,51 @@ namespace WebApi.Tests.src.Service.Tests
             Assert.IsType<BookDto>(result);
         }
 
-        // [Fact]
-        // public async Task UpdateBook_ValidDto_ReturnsUpdatedBookDto()
-        // {
-        //     // Arrange
-        //     var Id = Guid.NewGuid();
-        //     var updatedBookDto = new BookDto
-        //     {
-        //         Title = "Changed Title",
-        //         Author = new List<string> { "Changed Author 1"},
-        //         Images = new List<string> { "image1.jpg", "image2.jpg" },
-        //         ISBN = "99343-1234567890",
-        //         PublishedYear = "2022",
-        //         Description = "Sample description",
-        //         PageCount = 50,
-        //         InventoryCount = 2,
-        //         Genre = "Fiction"
-        //     };
+        [Fact]
+        public async Task UpdateBook_ValidDto_ReturnsUpdatedBookDto()
+        {
+            // Arrange
+            var Id = Guid.NewGuid();
+            var updatedBookDto = new Book
+            {
+                Title = "Changed Title",
+                Author = new List<string> { "Changed Author 1"},
+                Images = new List<string> { "image1.jpg", "image2.jpg" },
+                ISBN = "99343-1234567890",
+                PublishedYear = "2022",
+                Description = "Sample description",
+                PageCount = 50,
+                InventoryCount = 2,
+                Genre = Genre.Novel
+            };
 
-        //     var originalBook = new Book
-        //     {
-        //         Title = "Sample Title",
-        //         Author = new List<string> { "Author 1", "Author 2" },
-        //         Images = new List<string> { "image1.jpg", "image2.jpg" },
-        //         ISBN = "978-1234567890",
-        //         PublishedYear = "2012",
-        //         Description = "Sample description",
-        //         PageCount = 100,
-        //         InventoryCount = 10,
-        //         Genre = Genre.Novel
-        //     };
+            var originalBook = new Book
+            {
+                Title = "Sample Title",
+                Author = new List<string> { "Author 1", "Author 2" },
+                Images = new List<string> { "image1.jpg", "image2.jpg" },
+                ISBN = "978-1234567890",
+                PublishedYear = "2012",
+                Description = "Sample description",
+                PageCount = 100,
+                InventoryCount = 10,
+                Genre = Genre.Novel
+            };
 
-        //     _bookRepositoryMock.Setup(repo => repo.GetBookById(Id)).ReturnsAsync(originalBook);
-        //     _bookRepositoryMock.Setup(repo => repo.UpdateBook(Id, It.IsAny<Book>())).ReturnsAsync(originalBook);
+            _bookRepositoryMock.Setup(repo => repo.GetBookById(Id)).ReturnsAsync(originalBook);
 
-        //     var bookService = new BookService(_mapper, _bookRepositoryMock.Object);
+            _bookRepositoryMock.Setup(repo => repo.UpdateBook(Id, It.IsAny<Book>())).ReturnsAsync(updatedBookDto);
 
-        //     // Act
-        //     var result = await bookService.UpdateBook(Id, updatedBookDto);
+            var bookService = new BookService(_mapper, _bookRepositoryMock.Object);
+            var book = _mapper.Map<BookDto>(updatedBookDto);
 
-        //     // Assert
-        //     Assert.NotNull(result);
-        //     Assert.Equal(updatedBookDto.Title, result.Title);
-        //     Assert.Equal(updatedBookDto.Author, result.Author);
-        // }
+            // Act
+            var result = await bookService.UpdateBook(Id, book);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(updatedBookDto.Title, result.Title);
+            Assert.Equal(updatedBookDto.Author, result.Author);
+        }
     }
 }

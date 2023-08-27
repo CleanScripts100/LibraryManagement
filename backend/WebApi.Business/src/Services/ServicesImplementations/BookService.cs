@@ -23,8 +23,8 @@ namespace WebApi.Business.src.Services.ServicesImplementations
             var book = _mapper.Map<Book>(bookdto);
             if (findBook != null)
             {
-                _ = await _bookRepository.UpdateBook(id, book);
-                return _mapper.Map<BookDto>(findBook);
+                var updatedBook = await _bookRepository.UpdateBook(id, book);
+                return _mapper.Map<BookDto>(updatedBook);
             } else
             {
                 return null!;

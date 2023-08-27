@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Business.src.Abstractions;
@@ -16,7 +17,7 @@ namespace WebApi.Controller.src.Controllers
         }
         
         // [Authorize(Roles = "Admin")]
-        [HttpPost("admin")]
+        [HttpPost("/Admin")]
         public async Task<ActionResult<UserReadDto>> CreateAdmin([FromBody] UserCreateDto dto)
         {
             return CreatedAtAction(nameof(CreateAdmin), await _userService.CreateAdmin(dto));
@@ -28,18 +29,27 @@ namespace WebApi.Controller.src.Controllers
             return Ok(await _userService.GetAll(queryOptions));
         }
 
-        public override async Task<ActionResult<UserReadDto>> GetOneById([FromRoute] Guid id)
+        [HttpGet("/Profile")]
+        [Authorize]
+        public async Task<ActionResult<UserReadDto>> GetOneById()
         {
+            var id = GetUserId();
             return Ok(await _userService.GetOneById(id));
         }
-        public override async Task<ActionResult<UserReadDto>> UpdateOneById(Guid id, UserUpdateDto updated)
+
+        [HttpPatch("/Update-profile")]
+        [Authorize]
+        public async Task<ActionResult<UserReadDto>> UpdateOneById(UserUpdateDto updated)
         {
+            var id = GetUserId();
             return Ok(await _userService.UpdateOneById(id, updated));
         }
 
-        [HttpPatch("{id}/passwordupdate")]
-        public async Task<ActionResult<UserReadDto>> UpdatePassword(Guid id, string newPassword)
+        [HttpPatch("{id}/Passwordupdate")]
+        [Authorize]
+        public async Task<ActionResult<UserReadDto>> UpdatePassword(string newPassword)
         {
+            var id = GetUserId();
             return Ok(await _userService.UpdatePassword(id, newPassword));
         }
 
