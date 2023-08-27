@@ -59,7 +59,7 @@ namespace WebApi.Business.src.Services.ServicesImplementations
                 UserId = loan.UserId,
                 ReturnDate = loan.ReturnDate,
                 Status = loan.Status.ToString(),
-                books = BookIdListToBooDtoList(loan.Books)
+                books = BookIdListToBooDtoList(loan.Books!)
             };
             return output;
         }

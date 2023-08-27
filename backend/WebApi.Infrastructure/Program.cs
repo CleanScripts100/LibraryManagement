@@ -12,6 +12,7 @@ using WebApi.Infrastructure.src.Middleware;
 using WebApi.Infrastructure.src.Repositories.Implementation;
 using WebApiDemo.Business.src.Implementations;
 using WebApi.Infrastructure.src.Repositories;
+
 // Build
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,28 +61,22 @@ builder.Services.AddSwaggerGen(c =>
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
+        {
+            new OpenApiSecurityScheme
             {
-                new OpenApiSecurityScheme
+                Reference = new OpenApiReference
                 {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
-                },
-                Array.Empty<string>()
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
             },
+            Array.Empty<string>()
+        },
     });
 });
 
 builder.Services
 .AddSingleton<ErrorHandlerMiddleware>();
-
-//Config route
-builder.Services.Configure<RouteOptions>(options =>
-{
-    options.LowercaseUrls = true;
-});
 
 // Config the authentication
 builder.Services.AddAuthentication(options =>
@@ -114,6 +109,27 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero
     };
 });
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:5173") // React app's URL
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
+// builder.Services.AddSwaggerGen(options =>
+// {
+//     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+//     {
+//         Description = "Bearer token authentication",
+//         Name = "Authentication",
+//         In = ParameterLocation.Header,
+//     });
+//     options.OperationFilter<SecurityRequirementsOperationFilter>();
+// });
 
 
 var app = builder.Build();
