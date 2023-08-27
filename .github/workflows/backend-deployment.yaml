@@ -19,16 +19,15 @@ jobs:
         run: dotnet build --no-restore
       - name: Test
         run: dotnet test --no-build --verbosity normal
-      - name: Building web app
-        uses: azure/appservice-build@v3
-        with:
-          platform: <PLATFORM_NAME>
-          platform-version: <PLATFORM_VERSION>
-          source-directory: <SOURCE_DIR>
-          output-directory: <OUTPUT_DIR>
-
-      - name: Deploying web app to Azure
-        uses: azure/webapps-deploy@v1
-        with:
-          app-name: <WEB_APP_NAME>
-          publish-profile: ${{ secrets.AZURE_WEB_APP_PUBLISH_PROFILE }}
+      # - name: Building web app
+      #   uses: azure/appservice-build@v3
+      #   with:
+      #     platform: <PLATFORM_NAME>
+      #     platform-version: <PLATFORM_VERSION>
+      #     source-directory: <SOURCE_DIR>
+      #     output-directory: <OUTPUT_DIR>
+      # - name: Deploying web app to Azure
+      #   uses: azure/webapps-deploy@v1
+      #   with:
+      #     app-name: <WEB_APP_NAME>
+      #     publish-profile: ${{ secrets.AZURE_WEB_APP_PUBLISH_PROFILE }}
