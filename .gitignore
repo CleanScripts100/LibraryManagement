@@ -3,8 +3,10 @@
 # User-specific files
 backend/WebApi.Infrastructure/appsettings.json
 backend/WebApi.Infrastructure/appsettings.Development.json
+backend/appsettings.*.json
 backend/*/obj/
 backend/*/bin/
+backend/*/.vscode/
 backend/WebApi.Infrastructure/Migrations/
 
 # Visual Studio 2015/2017 cache/options directory
