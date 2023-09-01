@@ -36,6 +36,7 @@ namespace WebApi.Business.src.Services.ServicesImplementations
         {
             var loans = await _loanRepository.GetUserLoanedBooks(UserId);
             List<LoanViewDto> LoanViewDto = new List<LoanViewDto>();
+
             foreach (var loan in loans)
             {
                 var dto = new LoanViewDto()

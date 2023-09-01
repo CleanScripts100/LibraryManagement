@@ -19,7 +19,7 @@ namespace WebApi.Business.src.Services.ServicesImplementations
         }
         public async Task<Book> AddReview(ReviewDto dto)
         {
-            var review = _mapper.Map<Review>(dto) ?? throw CustomException.NotFoundException();
+            var review = _mapper.Map<Review>(dto);
             var book = await _reviewRepository.AddReview(review);
             return book;
         }

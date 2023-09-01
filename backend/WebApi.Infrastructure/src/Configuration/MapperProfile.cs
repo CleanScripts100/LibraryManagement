@@ -17,6 +17,7 @@ namespace WebApi.Infrastructure.src.Configuration
           .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => $"{src.LastName}"))
           .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => $"{src.Image}"))
           .ForMember(dest => dest.Role, opt => opt.MapFrom(src => $"{src.Role}"))
+          .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => $"{src.Gender}"))
           .ReverseMap();
         CreateMap<UserUpdateDto, User>()
           .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => $"{src.FirstName}"))

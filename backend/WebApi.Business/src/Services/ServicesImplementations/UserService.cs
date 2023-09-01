@@ -18,7 +18,7 @@ namespace WebApiDemo.Business.src.Implementations
 
         public async Task<UserReadDto> UpdatePassword(Guid id, string newPassword)
         {
-            var foundUser = await _userRepo.GetOneById(id) ?? throw new Exception("User not found");
+            var foundUser = await _userRepo.GetOneById(id) ?? throw CustomException.NotFoundException("User not found");
             PasswordService.HashPassword(newPassword, out var hashedPassword, out var salt);
             foundUser.Password = hashedPassword;
             foundUser.Salt = salt;
@@ -38,17 +38,21 @@ namespace WebApiDemo.Business.src.Implementations
 
         public override async Task<UserReadDto> UpdateOneById(Guid id, UserUpdateDto updated)
         {
-            var foundItem = await GetEntityById(id) ?? throw CustomException.NotFoundException();
+            var foundItem = await GetEntityById(id) ?? throw CustomException.NotFoundException("User not found");
             foundItem.FirstName = updated.FirstName!;
             foundItem.LastName = updated.LastName!;
             foundItem.Email = updated.Email;
-            foundItem.Gender = (WebApi.Domain.src.Enums.Gender)updated.Gender;
+            foundItem.Gender = (WebApi.Domain.src.Enums.Gender)updated.Gender!;
             foundItem.Image = updated.Image!;
             foundItem.UpdatedAt = DateTime.UtcNow;
 
             var updatedEntity = await _userRepo.UpdateOneById(foundItem);
+            if (updatedEntity == null) 
+            {
+                throw new CustomException(400, "Unable to update user");
+            } 
+            
             return _mapper.Map<UserReadDto>(updatedEntity);
-
         }
         
         public async Task<UserReadDto> CreateAdmin(UserCreateDto dto)

@@ -1,6 +1,7 @@
 using AutoMapper;
 using WebApi.Business.src.Dto;
 using WebApi.Business.src.Services.Abstractions.ServiceAbractions;
+using WebApi.Business.src.Shared;
 using WebApi.Domain.src.Abstractions;
 using WebApi.Domain.src.Entities;
 using WebApi.Domain.src.Shared;
@@ -24,10 +25,14 @@ namespace WebApi.Business.src.Services.ServicesImplementations
             if (findBook != null)
             {
                 var updatedBook = await _bookRepository.UpdateBook(id, book);
+                if (updatedBook == null)
+                {
+                    throw new CustomException(404, "Book was not added");
+                } 
                 return _mapper.Map<BookDto>(updatedBook);
             } else
             {
-                return null!;
+                throw CustomException.NotFoundException("Book was not found");
             }
         }
 
@@ -35,12 +40,20 @@ namespace WebApi.Business.src.Services.ServicesImplementations
         {
             var bookAdd = _mapper.Map<Book>(bookDto);
             var addedbook = await _bookRepository.AddBook(bookAdd);
+            if (addedbook == null)
+            {
+                throw new CustomException(400, "Book was not added");
+            }
             return _mapper.Map<BookDto>(addedbook);        
         }
 
         public async Task<BookDto> DeleteBook(Guid bookId)
         {
             var deleteBook = await _bookRepository.DeleteBook(bookId);
+            if (deleteBook == null)
+            {
+                throw CustomException.NotFoundException("Book not found");
+            }
             return _mapper.Map<BookDto>(deleteBook);        
         }
 
@@ -59,6 +72,10 @@ namespace WebApi.Business.src.Services.ServicesImplementations
         public async Task<BookDto> GetBookById(Guid id)
         {
             var foundBook = await  _bookRepository.GetBookById(id);
+            if (foundBook == null)
+            {
+                throw CustomException.NotFoundException("Book not found");
+            }
             return _mapper.Map<BookDto>(foundBook);        
         }
     }

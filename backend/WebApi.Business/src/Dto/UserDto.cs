@@ -39,6 +39,7 @@ public class UserReadDto
     public string Email { get; set; } = null!; 
     public string Avatar { get; set; } = null!;
     public string? Role { get; set; }
+    public string? Gender { get; set; }
 }
 
 public class UserCreateDto

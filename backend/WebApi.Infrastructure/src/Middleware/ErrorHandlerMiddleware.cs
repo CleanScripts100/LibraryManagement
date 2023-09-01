@@ -24,7 +24,7 @@ namespace WebApi.Infrastructure.src.Middleware
             }
             catch (Exception e)
             {
-                context.Response.StatusCode = 500;
+                context.Response.StatusCode = 400;
                 await context.Response.WriteAsJsonAsync(e.InnerException!.Message);
             }
         }

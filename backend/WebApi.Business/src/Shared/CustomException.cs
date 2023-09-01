@@ -5,9 +5,9 @@ namespace WebApi.Business.src.Shared
         public int StatusCode { get; set; }
         public string ErrorMessage { get; set; }
 
-        public CustomException(int statusCode = 500, string message = "Internal server error")
+        public CustomException(int statuscode = 500, string message = "Internal Server Error")
         {
-            StatusCode = statusCode;
+            StatusCode = statuscode;
             ErrorMessage = message;
         }
 

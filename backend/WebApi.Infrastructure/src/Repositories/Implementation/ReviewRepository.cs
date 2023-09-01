@@ -37,6 +37,10 @@ namespace WebApi.Infrastructure.src.Repositories
         public async Task<List<Review>> BookReviews(Guid BookId)
         {
             var reviews = await _reviews.Where(r => r.BookId == BookId).ToListAsync();
+            if (reviews == null)
+            {
+                throw new CustomException(400, "Book not found");
+            }
             return reviews;
         }
     }

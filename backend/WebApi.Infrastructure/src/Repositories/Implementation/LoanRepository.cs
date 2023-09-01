@@ -59,9 +59,6 @@ namespace WebApi.Infrastructure.src.Repositories
                 return loan;
             }
             throw CustomException.NotFoundException("No Book Found");
-
-
-            throw new NotImplementedException();
         }
      
         public async Task<bool> ReturnLoanedBooks(Guid Userid, Guid LoanId)
@@ -71,13 +68,15 @@ namespace WebApi.Infrastructure.src.Repositories
 
             if (loanedBook != null)
             {
-                foreach (var book in loanedBook.BookId)
+                foreach (var book in loanedBook.BookId!)
                 {
                     var actualBook = await _books.FindAsync(book);
-                    actualBook.InventoryCount += 1;
+                    actualBook!.InventoryCount += 1;
                     _books.Update(actualBook);
                 }
                 loanedBook.Status = Domain.src.Enums.LoanStatus.Returned;
+                loanedBook.ReturnDate = DateTime.UtcNow;
+                loanedBook.UpdatedAt = DateTime.UtcNow;
                 _loans.Update(loanedBook);
 
                 await _dbContext.SaveChangesAsync();
@@ -92,12 +91,12 @@ namespace WebApi.Infrastructure.src.Repositories
             var loans = await _loans.Include(l => l.Books).ToListAsync();
             if (loans.Count == 0)
             {
-                throw CustomException.NotFoundException("No Loans Yet");
+                throw CustomException.NotFoundException("No Books Loans Yet");
             }
 
             foreach (var loan in loans)
             {
-                loan.Books = await _books.Where(b => loan.BookId.Contains(b.Id)).ToListAsync();
+                loan.Books = await _books.Where(b => loan.BookId!.Contains(b.Id)).ToListAsync();
             }
             
             return loans;
@@ -113,7 +112,7 @@ namespace WebApi.Infrastructure.src.Repositories
 
             foreach (var loan in loans)
             {
-                loan.Books = await _books.Where(b => loan.BookId.Contains(b.Id)).ToListAsync();
+                loan.Books = await _books.Where(b => loan.BookId!.Contains(b.Id)).ToListAsync();
             }
 
             return loans;
