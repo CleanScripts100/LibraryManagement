@@ -1,13 +1,14 @@
-import Navbar from "../components/Navbar";
-
+import axios from "axios";
+import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useState } from "react";
-import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
-import axios from "axios";
-import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+
+import Navbar from "../components/Navbar";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+
 const schema = yup.object({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
@@ -41,33 +42,27 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-      resolver: yupResolver(schema),
-      defaultValues: {
-          role:"user"
-      }
+    resolver: yupResolver(schema),
+    defaultValues: {
+      role: "user",
+    },
   });
-    const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-    const navigate  =  useNavigate()
-    const onSubmit = handleSubmit(async(data) => {
-        try {
-   
-            
-            const response = await axios.post(
-                "https://libmgtsyst.azurewebsites.net/api/v1/users",
-                data
-                
-            );
+  const navigate = useNavigate();
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      const response = await axios.post(
+        "https://libmgtsyst.azurewebsites.net/api/v1/users",
+        data
+      );
 
-            if (response.status === 201) {
-                toast.success('user created successfully')
-                setTimeout(() => navigate('/login'), 100)
-                
-         }
-        } catch (error) {
-            
-        }
-    })
+      if (response.status === 201) {
+        toast.success("user created successfully");
+        setTimeout(() => navigate("/login"), 100);
+      }
+    } catch (error) {}
+  });
 
   return (
     <>
@@ -223,10 +218,6 @@ const SignUp = () => {
               <button className="block rounded-lg bg-gray-800 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-gray-300 transition duration-100 hover:bg-gray-700 focus-visible:ring active:bg-gray-600 md:text-base">
                 Create Account
               </button>
-
-  
-
-            
             </div>
 
             <div className="flex items-center justify-center bg-gray-100 p-4">

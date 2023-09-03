@@ -1,13 +1,11 @@
+import Sidebar from "../components/SideNav";
+import DashNav from "../components/DashNav";
 
-import Sidebar from '../components/SideNav'
-import DashNav from '../components/DashNav';
-
-import { Outlet } from 'react-router-dom';
-import { useAppSelector } from '../hooks/reduxHooks';
+import { Outlet } from "react-router-dom";
+import { useAppSelector } from "../hooks/reduxHooks";
 const Dashboard = () => {
-const {books}   = useAppSelector((state)=> state.books)
-console.log(books);
-
+  const { books } = useAppSelector((state) => state.books);
+  console.log(books);
 
   return (
     <div>
@@ -16,12 +14,12 @@ console.log(books);
       <div className="p-4 sm:ml-64">
         <DashNav />
 
-        <div className='pt-10'>
-     <Outlet/>
+        <div className="pt-10">
+          <Outlet />
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default Dashboard
+export default Dashboard;

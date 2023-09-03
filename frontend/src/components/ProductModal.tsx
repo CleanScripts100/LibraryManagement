@@ -1,17 +1,3 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
 import { Fragment, useState } from "react";
 import { Dialog, RadioGroup, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";

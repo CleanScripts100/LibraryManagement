@@ -1,14 +1,12 @@
-import React from 'react'
-import {  useAppSelector } from '../hooks/reduxHooks';
+import { useAppSelector } from "../hooks/reduxHooks";
 
 const DashNav = () => {
-  const {user} =  useAppSelector(state=> state.user)
+  const { user } = useAppSelector((state) => state.user);
   return (
     <header>
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800 border-b">
         <div className="flex flex-wrap justify-between items-center">
           <div className="flex justify-start items-center">
-         
             <button
               aria-expanded="true"
               aria-controls="sidebar"
@@ -73,12 +71,6 @@ const DashNav = () => {
             </form>
           </div>
           <div className="flex items-center lg:order-2">
-        
-
-            
-      
-
-
             <button
               type="button"
               className="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
@@ -93,13 +85,11 @@ const DashNav = () => {
                 alt="user photo"
               />
             </button>
-
-  
           </div>
         </div>
       </nav>
     </header>
   );
-}
+};
 
-export default DashNav
+export default DashNav;

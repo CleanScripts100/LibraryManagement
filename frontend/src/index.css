@@ -3,27 +3,25 @@
 @tailwind utilities;
 
 .sticky-nav {
-     animation: sticky-nav 300ms;
+  animation: sticky-nav 300ms;
 }
-    
+
 @keyframes sticky-nav {
-    0% {
-        transform: translateY(-6em)
-    }
+  0% {
+    transform: translateY(-6em);
+  }
 
-    100% {
-        transform: translateY(0)
-    }
+  100% {
+    transform: translateY(0);
+  }
 }
 
-
-.MuiAccordionSummary-button{
-    justify-content: flex-start !important;
+.MuiAccordionSummary-button {
+  justify-content: flex-start !important;
 }
-.MuiAccordionSummary-indicator{
-margin-left: auto;
+.MuiAccordionSummary-indicator {
+  margin-left: auto;
 }
-
 
 /* From uiverse.io by @satyamchaudharydev */
 /* removing default style of button */
@@ -51,7 +49,7 @@ margin-left: auto;
   padding-inline: 0.8em;
   border-radius: var(--border-radius);
   transition: border-radius 0.5s ease;
-  background: var(--input-bg,#fff);
+  background: var(--input-bg, #fff);
 }
 /* styling of Input */
 .input {
@@ -108,7 +106,6 @@ input:not(:placeholder-shown) ~ .reset {
   margin-top: 3px;
 }
 
-
 .boxes {
   --size: 32px;
   --duration: 800ms;
@@ -155,7 +152,7 @@ input:not(:placeholder-shown) ~ .reset {
 }
 
 .boxes .box > div {
-  --background: #5C8DF6;
+  --background: #5c8df6;
   --top: auto;
   --right: auto;
   --bottom: auto;
@@ -171,7 +168,8 @@ input:not(:placeholder-shown) ~ .reset {
   right: var(--right);
   bottom: var(--bottom);
   left: var(--left);
-  transform: rotateY(var(--rotateY)) rotateX(var(--rotateX)) translateZ(var(--translateZ));
+  transform: rotateY(var(--rotateY)) rotateX(var(--rotateX))
+    translateZ(var(--translateZ));
 }
 
 .boxes .box > div:nth-child(1) {
@@ -191,14 +189,15 @@ input:not(:placeholder-shown) ~ .reset {
 }
 
 .boxes .box > div:nth-child(4) {
-  --background: #DBE3F4;
+  --background: #dbe3f4;
   --top: 0;
   --left: 0;
   --translateZ: calc(var(--size) * 3 * -1);
 }
 
 @-webkit-keyframes box1 {
-  0%, 50% {
+  0%,
+  50% {
     transform: translate(100%, 0);
   }
 
@@ -208,7 +207,8 @@ input:not(:placeholder-shown) ~ .reset {
 }
 
 @keyframes box1 {
-  0%, 50% {
+  0%,
+  50% {
     transform: translate(100%, 0);
   }
 
@@ -246,7 +246,8 @@ input:not(:placeholder-shown) ~ .reset {
 }
 
 @-webkit-keyframes box3 {
-  0%, 50% {
+  0%,
+  50% {
     transform: translate(100%, 100%);
   }
 
@@ -256,7 +257,8 @@ input:not(:placeholder-shown) ~ .reset {
 }
 
 @keyframes box3 {
-  0%, 50% {
+  0%,
+  50% {
     transform: translate(100%, 100%);
   }
 

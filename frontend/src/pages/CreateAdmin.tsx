@@ -1,5 +1,3 @@
-import Navbar from "../components/Navbar";
-
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -65,7 +63,6 @@ const CreateAdmin = () => {
 
   return (
     <>
-
       <div className="bg-white py-6 sm:py-8 lg:py-12">
         <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
           <h2 className="mb-4  text-2xl font-bold text-gray-800 md:mb-8 lg:text-3xl">
@@ -217,13 +214,7 @@ const CreateAdmin = () => {
               <button className="block rounded-lg bg-gray-800 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-gray-300 transition duration-100 hover:bg-gray-700 focus-visible:ring active:bg-gray-600 md:text-base">
                 Create Admin
               </button>
-
-              
-
-          
             </div>
-
-         
           </form>
         </div>
       </div>

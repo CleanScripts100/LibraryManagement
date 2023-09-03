@@ -1,51 +1,45 @@
-import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useAppSelector } from '../hooks/reduxHooks'
-
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { useAppSelector } from "../hooks/reduxHooks";
 
 // Add this style to your css file
 
-
-const Navbar =  () => {
-const {user} =  useAppSelector(state=> state.user)
-  const [state, setState] = useState(false)
-  const navRef = useRef<HTMLElement>(null)
+const Navbar = () => {
+  const { user } = useAppSelector((state) => state.user);
+  const [state, setState] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
 
   // Replace / path with your path
-  const navigation = [
-      { title: "Books", path: "/" },
-      { title: "Loans", path: "/loans" },
-     
-  ]
+  // const navigation = [
+  //   { title: "Books", path: "/" },
+  //   { title: "Loans", path: "/loans" },
+  // ];
 
   useEffect(() => {
-      
-      const body = document.body
+    const body = document.body;
 
-      // Disable scrolling
-      const customBodyStyle = ["overflow-hidden", "lg:overflow-visible"]
-      if (state) body.classList.add(...customBodyStyle)
-      // Enable scrolling
-      else body.classList.remove(...customBodyStyle)
+    // Disable scrolling
+    const customBodyStyle = ["overflow-hidden", "lg:overflow-visible"];
+    if (state) body.classList.add(...customBodyStyle);
+    // Enable scrolling
+    else body.classList.remove(...customBodyStyle);
 
-      // Sticky strick
-      const customStyle = ["sticky-nav", "fixed", "border-b"]
-      window.onscroll = () => {
-          if (navRef.current) {
-              
-              if (window.scrollY > 80) navRef?.current.classList.add(...customStyle)
-              else navRef.current.classList.remove(...customStyle)
-          }
+    // Sticky strick
+    const customStyle = ["sticky-nav", "fixed", "border-b"];
+    window.onscroll = () => {
+      if (navRef.current) {
+        if (window.scrollY > 80) navRef?.current.classList.add(...customStyle);
+        else navRef.current.classList.remove(...customStyle);
       }
-    }, [state])
-    
+    };
+  }, [state]);
 
   return (
     <nav ref={navRef} className="bg-white w-full top-0 z-20">
       <div className="items-center px-4 max-w-screen-3xl mx-auto md:px-8 lg:flex">
         <div className="flex items-center justify-between py-3 lg:py-4 lg:block">
-          <Link to="/" className='text-3xl'>
-         BooKing
+          <Link to="/" className="text-3xl">
+            BooKing
           </Link>
           <div className="lg:hidden">
             <button
@@ -153,6 +147,6 @@ const {user} =  useAppSelector(state=> state.user)
       </div>
     </nav>
   );
-}
+};
 
-export default Navbar
+export default Navbar;

@@ -1,15 +1,13 @@
-import  { ChangeEvent, Dispatch, KeyboardEventHandler, useState } from "react";
+import { ChangeEvent, Dispatch, KeyboardEventHandler, useState } from "react";
 import { isImgUrl } from "../utils/functions";
-
 
 interface CustomInputProps {
   images: string[];
   setimages: Dispatch<React.SetStateAction<string[]>>;
 }
-export default function CustomInput({ images, setimages }: CustomInputProps
-) {
+export default function CustomInput({ images, setimages }: CustomInputProps) {
   const [inputValue, setInputValue] = useState("");
-  
+
   const [error, setError] = useState<string | null>(null);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -42,21 +40,20 @@ export default function CustomInput({ images, setimages }: CustomInputProps
       }`}
     >
       <ul className="flex flex-wrap gap-2">
-        {
-          
-          images ? <>
-          
-          {images.map((item, index) => (
-            <li
-              key={index}
-              className="bg-blue-100 text-blue-800 text-xs font-medium  px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
-            >
-              {item}
-            </li>
-          ))}
-          </>:"Loading..."
-}
-        
+        {images ? (
+          <>
+            {images.map((item, index) => (
+              <li
+                key={index}
+                className="bg-blue-100 text-blue-800 text-xs font-medium  px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+              >
+                {item}
+              </li>
+            ))}
+          </>
+        ) : (
+          "Loading..."
+        )}
       </ul>
 
       <div className="mb-4">

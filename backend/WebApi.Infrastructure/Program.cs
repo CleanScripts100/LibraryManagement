@@ -85,6 +85,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
+
 .AddJwtBearer(jwt =>
 {
     // string jwtConfig = builder.Configuration.GetSection("JwtConfig:JwtKey").Value!;
@@ -112,13 +113,20 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(builder =>
-    {
-        builder.WithOrigins("http://localhost:5173") // React app's URL
-        .AllowAnyHeader()
-        .AllowAnyMethod();
-    });
+    options.AddPolicy("Open", builder => builder.AllowAnyOrigin()
+    .AllowAnyHeader()
+    .AllowAnyMethod());
 });
+
+// builder.Services.AddCors(options =>
+// {
+//     options.AddDefaultPolicy(builder =>
+//     {
+//         builder.AllowAnyOrigin() // React app's URL
+//         .AllowAnyHeader()
+//         .AllowAnyMethod();
+//     });
+// });
 
 // Config route
 builder.Services.Configure<RouteOptions>(options =>
@@ -139,7 +147,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseCors();
+app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 

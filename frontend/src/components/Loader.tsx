@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Loader = () => {
   return (
     <div className="boxes">
@@ -29,6 +27,6 @@ const Loader = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Loader
+export default Loader;

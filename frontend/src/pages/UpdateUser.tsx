@@ -1,11 +1,12 @@
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-
-import { updateUserprofile } from "../redux/reducers/userReducers";
+import { updateUser } from "../redux/reducers/userReducers";
+import { isImgUrl } from "../utils/functions";
 
 const schema = yup.object({
   id: yup.string(),
@@ -23,7 +24,7 @@ const schema = yup.object({
   role: yup.string(),
 });
 
-export default function Profile() {
+export default function UpdateUser() {
   const {
     register,
     handleSubmit,
@@ -38,13 +39,17 @@ export default function Profile() {
   const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
-  console.log(errors);
-
+  // const [avatar, setavatar] = useState("");
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
+    const isValidImgUrl = await isImgUrl(data.avatar);
+
+    if (!isValidImgUrl) {
+      toast.error("Invalid image URL");
+      return;
+    }
 
     try {
-      dispatch(updateUserprofile(data as any));
+      dispatch(updateUser(data as any));
     } catch (error) {}
   });
 
@@ -54,6 +59,7 @@ export default function Profile() {
       email: user?.email,
       firstName: user?.firstName,
       lastName: user?.lastName,
+      role: user?.role,
       avatar: user?.avatar,
     });
   }, [user]);
@@ -63,17 +69,14 @@ export default function Profile() {
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 ">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Profile
+              User Profile
             </h2>
           </div>
 
           <div className=" border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Personal Information
+              Update User Personal Information
             </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
-              Use a permanent address where you can receive mail.
-            </p>
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-3">
@@ -111,7 +114,7 @@ export default function Profile() {
                     type="text"
                     {...register("lastName")}
                     id="last-name"
-                    autoComplete="family-name"
+                    autoComplete="name"
                     className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                   {errors.lastName && (
@@ -150,16 +153,16 @@ export default function Profile() {
                   htmlFor="street-address"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Street address
+                  Role
                 </label>
                 <div className="mt-2">
-                  <input
-                    type="text"
-                    name="street-address"
-                    id="street-address"
-                    autoComplete="street-address"
+                  <select
+                    {...register("role")}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                  >
+                    <option value="Customer">Customer</option>
+                    <option value="Admin">Admin</option>
+                  </select>
                 </div>
               </div>
 

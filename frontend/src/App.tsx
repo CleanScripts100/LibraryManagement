@@ -16,9 +16,9 @@ import Dashboard from "./layout/Dashboard";
 import Overview from "./pages/Overview";
 import Books from "./pages/Books";
 import CreateBooks from "./pages/CreateBooks";
-import Users from "./pages/Users";
+// import Users from "./pages/Users";
 import CreateAdmin from "./pages/CreateAdmin";
-import UpdateUser from "./pages/UpdateUser";
+// import UpdateUser from "./pages/UpdateUser";
 
 const router = createBrowserRouter([
   {
@@ -65,14 +65,14 @@ const router = createBrowserRouter([
         element: <CreateBooks />,
       },
 
-      {
-        path: "users",
-        element: <Users />,
-      },
-      {
-        path: "users/:id",
-        element: <UpdateUser />,
-      },
+      // {
+      //   path: "users",
+      //   element: <Users />,
+      // },
+      // {
+      //   path: "users/:id",
+      //   element: <UpdateUser />,
+      // },
 
       {
         path: "create-admin",
