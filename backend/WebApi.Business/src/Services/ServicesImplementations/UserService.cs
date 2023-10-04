@@ -5,7 +5,6 @@ using WebApi.Business.src.Implementations;
 using WebApi.Business.src.Shared;
 using WebApi.Domain.src.Abstractions;
 using WebApi.Domain.src.Entities;
-using WebApi.Domain.src.Enums;
 
 namespace WebApiDemo.Business.src.Implementations
 {
@@ -43,7 +42,7 @@ namespace WebApiDemo.Business.src.Implementations
             foundItem.FirstName = updated.FirstName!;
             foundItem.LastName = updated.LastName!;
             foundItem.Email = updated.Email;
-            foundItem.Gender = Enum.Parse<Gender>(updated.Gender!);
+            foundItem.Gender = updated.Gender;
             foundItem.Image = updated.Image!;
             foundItem.UpdatedAt = DateTime.UtcNow;
 
@@ -52,7 +51,6 @@ namespace WebApiDemo.Business.src.Implementations
             {
                 throw new CustomException(400, "Unable to update user");
             } 
-            
             return _mapper.Map<UserReadDto>(updatedEntity);
         }
         

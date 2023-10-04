@@ -7,6 +7,9 @@
 ![.NET Core](https://img.shields.io/badge/.NET%20Core-v.7-purple)
 ![EF Core](https://img.shields.io/badge/EF%20Core-v.7-cyan)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-v.14-drakblue)
+![Vite](https://img.shields.io/badge/Vite-v.4-purple)
+![ASP.NET](https://img.shields.io/badge/ASP.Net-v.4-purple)
+![Microsoft azure](https://img.shields.io/badge/MicrosoftAzure--blue)
 
 This project involves creating a Fullstack project with React and Redux on the frontend and ASP.NET Core 7 on the backend. The goal is to provide a seamless experience for users, along with robust management system for administrators.
 

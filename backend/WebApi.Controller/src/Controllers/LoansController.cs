@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Business.src.Abstractions;
@@ -15,15 +16,19 @@ namespace WebApi.Controller.src.Controllers
             _loanService = loanService;
         }
 
+        [Authorize]
         [HttpPost]
-        public async Task<ActionResult<LoanViewDto>> LoanBook(Guid userId, [FromBody] List<Guid> booksId)
+        public async Task<ActionResult<LoanViewDto>> LoanBook([FromBody] List<Guid> booksId)
         {
+            var userId = GetUserId();
             return await _loanService.LoanBook(userId, booksId);
         }
 
+        [Authorize]
         [HttpPost("return")]
-        public async Task<ActionResult<bool>> ReturnLoanBook(Guid userId, Guid loanId)
+        public async Task<ActionResult<bool>> ReturnLoanBook( Guid loanId)
         {
+            var userId = GetUserId();
             return await _loanService.ReturnLoanedBooks(userId, loanId);
         }
 
@@ -41,6 +46,13 @@ namespace WebApi.Controller.src.Controllers
             var result = await _loanService.GetUserLoanedBooks(userId);
             return Ok(result);
 
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public Guid GetUserId () 
+        {
+            var claim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            return new Guid (claim!.Value);
         }
     }
 }
