@@ -30,7 +30,10 @@ namespace WebApi.Infrastructure.src.Configuration
           .ForMember(dest => dest.Image, opt => opt.MapFrom(src => $"{src.Avatar}"))
           .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => $"{src.Gender}"))
           .ReverseMap();
-        CreateMap<ReviewDto, Review>().ReverseMap();
-      }
+        CreateMap<Review, ReviewDto>()
+          .ForMember(destinationMember: dest => dest.Firstname, opt => opt.MapFrom(src => $"{src.User.FirstName}"))
+          .ForMember(destinationMember: dest => dest.Lastname, opt => opt.MapFrom(src => $"{src.User.LastName}"))
+        .ReverseMap();
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace WebApi.Controller.src.Controllers
         }
 
         [Authorize]
-        [HttpPost("return")]
+        [HttpPost("return/{loanId}")]
         public async Task<ActionResult<bool>> ReturnLoanBook( Guid loanId)
         {
             var userId = GetUserId();
@@ -40,12 +40,11 @@ namespace WebApi.Controller.src.Controllers
             return Ok(result);
         }
 
-        [HttpGet("user-loans")]
+        [HttpGet("{userId}")]
         public async Task<ActionResult<IEnumerable<LoanViewDto>>> GetUserLoanedBooks(Guid userId)
         {
             var result = await _loanService.GetUserLoanedBooks(userId);
             return Ok(result);
-
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]

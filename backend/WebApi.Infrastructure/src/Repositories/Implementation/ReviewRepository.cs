@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WebApi.Business.src.Abstractions;
+using WebApi.Business.src.Dto;
 using WebApi.Business.src.Shared;
 using WebApi.Domain.src.Abstractions;
 using WebApi.Domain.src.Entities;
@@ -36,7 +37,7 @@ namespace WebApi.Infrastructure.src.Repositories
 
         public async Task<List<Review>> BookReviews(Guid BookId)
         {
-            var reviews = await _reviews.Where(r => r.BookId == BookId).ToListAsync();
+            var reviews = await _reviews.Where(r => r.BookId == BookId).Include(u => u.User).ToListAsync();
             if (reviews == null)
             {
                 throw new CustomException(400, "Book not found");

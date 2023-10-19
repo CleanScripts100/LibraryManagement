@@ -20,12 +20,12 @@ namespace WebApi.Infrastructure.src.Middleware
             catch (DbUpdateException e)
             {
                 context.Response.StatusCode = 500;
-                await context.Response.WriteAsJsonAsync(e.InnerException!.Message);
+                await context.Response.WriteAsJsonAsync(e.InnerException?.Message ?? "An error occurred during database update.");
             }
             catch (Exception e)
             {
                 context.Response.StatusCode = 400;
-                await context.Response.WriteAsJsonAsync(e.InnerException!.Message);
+                await context.Response.WriteAsJsonAsync(e.InnerException?.Message ?? "An unexpected error occurred.");
             }
         }
         

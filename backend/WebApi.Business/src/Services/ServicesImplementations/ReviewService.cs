@@ -28,7 +28,6 @@ namespace WebApi.Business.src.Services.ServicesImplementations
         {
             var reviews = await _reviewRepository.BookReviews(BookId);
             return _mapper.Map<List<ReviewDto>>(reviews);
-
         }
     }
 }

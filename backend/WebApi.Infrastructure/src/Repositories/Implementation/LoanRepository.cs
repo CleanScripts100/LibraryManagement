@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApi.Business.src.Shared;
 using WebApi.Domain.src.Abstractions;
 using WebApi.Domain.src.Entities;
+using WebApi.Domain.src.Enums;
 using WebApi.Infrastructure.src.Database;
 
 namespace WebApi.Infrastructure.src.Repositories
@@ -104,7 +105,12 @@ namespace WebApi.Infrastructure.src.Repositories
 
         public async Task<IEnumerable<Loan>> GetUserLoanedBooks(Guid UserId)
         {
-            var loans = await _loans.Where(l => l.UserId == UserId).Include(l => l.Books).ToListAsync();
+            // var loans = await _loans.Where(l => l.UserId == UserId).Include(l => l.Books).ToListAsync();
+            var loans = await _loans
+            .Where(l => l.UserId == UserId && l.Status == LoanStatus.Borrowed) // Adjust the property name accordingly
+            .Include(l => l.Books)
+            .ToListAsync();
+            
             if (loans.Count == 0)
             {
                 throw CustomException.NotFoundException("You have No Loans Yet");

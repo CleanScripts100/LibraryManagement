@@ -23,12 +23,11 @@ namespace WebApi.Controller.src.Controllers
             return await _reviewService.AddReview(review);
         }
 
-        [HttpGet]
+        [HttpGet("{bookId}")]
         public async Task<ActionResult<IEnumerable<ReviewDto>>> BookReviews(Guid bookId)
         {
             var result = await _reviewService.BookReviews(bookId);
             return result;
-
         }
     }
 }
